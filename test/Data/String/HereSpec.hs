@@ -55,6 +55,43 @@ spec = do
           actual :: T.Text
           actual = [i|value is ${val1}|]
       actual `shouldBe` expect
+
+    it "should interpolate a String to a ByteString" $ do
+      let name :: String
+          name   = "Jack"
+          expect :: BS.ByteString
+          expect = "his name is Jack" 
+          actual :: BS.ByteString
+          actual = [i|his name is ${name}|]
+      actual `shouldBe` expect
+    
+    it "should interpolate a String to a Text" $ do
+      let name :: String
+          name   = "Jack"
+          expect :: T.Text
+          expect = "his name is Jack" 
+          actual :: T.Text
+          actual = [i|his name is ${name}|]
+      actual `shouldBe` expect
+    
+    it "should interpolate a ByteString to a Text" $ do
+      let name :: BS.ByteString
+          name   = "Jack"
+          expect :: T.Text
+          expect = "his name is Jack" 
+          actual :: T.Text
+          actual = [i|his name is ${name}|]
+      actual `shouldBe` expect
+
+    -- (ISSUE: https://github.com/tmhedberg/here/issues/16)
+    it "should interpolate a Text to a Text (#16)" $ do
+      let text :: T.Text
+          text   = "Test"
+          expect :: T.Text
+          expect = "Test" 
+          actual :: T.Text
+          actual = [i|${text}|]
+      actual `shouldBe` expect
   
   -- (from: https://github.com/tmhedberg/here#readme)
   describe "here quote" $ do

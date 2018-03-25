@@ -29,7 +29,8 @@ library
     haskell-src-meta >= 0.6 && < 0.9,
     mtl >=2.1 && < 2.3,
     parsec ==3.1.*,
-    template-haskell
+    template-haskell,
+    to-string
   ghc-options: -Wall
 
 test-suite here-test

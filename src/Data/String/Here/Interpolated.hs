@@ -12,6 +12,7 @@ import Data.Maybe
 import Data.Monoid
 import Data.String
 import Data.Typeable
+import qualified Data.String.ToString as ToString
 
 import Language.Haskell.Meta
 import Language.Haskell.TH
@@ -76,8 +77,8 @@ combineParts = combine . map toExpQ
     combine [] = stringE ""
     combine parts = foldr1 (\subExpr acc -> [|$subExpr <> $acc|]) parts
 
-toString :: (Show a, Typeable a, Typeable b, IsString b) => a -> b
-toString x = fromMaybe (fromString $ show x) (cast x)
+toString :: (Show a, Typeable a, Typeable b, IsString b, ToString.ToString a) => a -> b
+toString x = fromMaybe (fromString $ ToString.toString x) (cast x)
 
 parseInterp :: String -> Either ParseError [StringPart]
 parseInterp = parse p_interp ""
