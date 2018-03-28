@@ -1,5 +1,5 @@
 # (from: https://docs.travis-ci.com/user/languages/haskell/)
-
+# (from: https://github.com/rickardlindberg/alldoc/blob/22607f07021563b07f493956e9106819cedc6182/.travis.yml)
 language: haskell
 
 ghc:
@@ -12,12 +12,13 @@ cache:
 
 before_install:
 - cabal update
+- cabal install cabal-install
 
 install:
-- cabal install --only-dependencies --enable-test
+- ~/.cabal/bin/cabal install --only-dependencies --enable-test
 
 script:
 # Show GHC version
  - ghc --version
  # Test
- - cabal test --show-details=streaming
+ - ~/.cabal/bin/cabal test --show-details=streaming
