@@ -1,22 +1,34 @@
-# (from: https://docs.travis-ci.com/user/languages/haskell/)
-# (from: https://github.com/rickardlindberg/alldoc/blob/22607f07021563b07f493956e9106819cedc6182/.travis.yml)
+# (from: https://github.com/kapralVV/Unique/blob/376ff6d3df537232948d74ff5786d5a8c5096ea1/.travis.yml)
+dist: trusty
+sudo: false
+os: linux
+
 language: haskell
-
-ghc:
-- "8.0.1"
-
-# Caching so the next build will be fast too.
 cache:
   directories:
-  - $HOME/.cabal
+    - .cabal-sandbox
 
-install:
-- cabal update
-- cabal sandbox init
-- cabal install --only-dependencies --enable-test
+matrix:
+  include:
+  - ghc: "8.2"
+    env: CACHE_NAME=CACHE8.2
 
-script:
-# Show GHC version
- - ghc --version
- # Test
- - cabal test --show-details=streaming
+  - ghc: "8.0"
+    env: CACHE_NAME=CACHE8.0
+
+  - ghc: "7.10"
+    env: CACHE_NAME=CACHE7.10
+
+  - ghc: "7.8"
+    env: CACHE_NAME=CACHE7.8
+
+  - ghc: "7.6"
+    env: CACHE_NAME=CACHE7.6
+
+  - ghc: "7.4"
+    env: CACHE_NAME=CACHE7.4
+    install : cabal sandbox init && cabal install --only-dependencies --enable-tests --disable-documentation
+    script: cabal configure --enable-tests && cabal test --show-details=always
+
+install : cabal sandbox init && cabal install --only-dependencies --enable-tests --enable-benchmarks --disable-documentation
+script: cabal configure --enable-tests --enable-benchmarks && cabal test --show-details=always && cabal bench --benchmark-option="-obench.html"
