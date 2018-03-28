@@ -10,15 +10,13 @@ cache:
   directories:
   - $HOME/.cabal
 
-before_install:
-- cabal update
-- cabal install cabal-install
-
 install:
-- ~/.cabal/bin/cabal install --only-dependencies --enable-test
+- cabal update
+- cabal sandbox init
+- cabal install --only-dependencies --enable-test
 
 script:
 # Show GHC version
  - ghc --version
  # Test
- - ~/.cabal/bin/cabal test --show-details=streaming
+ - cabal test --show-details=streaming
