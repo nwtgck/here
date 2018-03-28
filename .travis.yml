@@ -3,7 +3,7 @@
 language: haskell
 
 ghc:
-- "8.2"
+- "8.0.1"
 
 # Caching so the next build will be fast too.
 cache:
