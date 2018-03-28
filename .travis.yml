@@ -1,5 +1,7 @@
 # (from: https://docs.travis-ci.com/user/languages/haskell/)
 
+language: haskell
+
 ghc:
 - "8.2"
 
@@ -15,5 +17,7 @@ install:
 - cabal install --only-dependencies --enable-test
 
 script:
+# Show GHC version
+ - ghc --version
  # Test
  - cabal test --show-details=streaming
