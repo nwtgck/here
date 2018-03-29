@@ -28,8 +28,7 @@ matrix:
 install : 
   - cabal sandbox init
   - cabal install happy  
-  - cabal install --only-dependencies --enable-tests --enable-benchmarks --disable-documentation
+  - cabal install --only-dependencies --enable-tests --disable-documentation
 script: 
-  - cabal configure --enable-tests --enable-benchmarks
+  - cabal configure --enable-tests
   - cabal test --show-details=always
-  - cabal bench --benchmark-option="-obench.html"
